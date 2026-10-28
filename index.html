@@ -1,529 +1,314 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="manifest" href="site.webmanifest">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Angus Thomson</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+<meta name="claude:viewport-fit-sides" content="cover">
+
 <style>
-  :root {
-    --bg: #f5f5f5;
-    --surface: #e2e2e2;
-    --border: #d0d0d0;
-    --text: #1a1a1a;
-    --muted: #888;
-    --white: #fff;
-  }
+/*
+  Layout: single-column, max 600px, centered; photo full-width above bio
+  Color: black background, off-white text — committed single dark theme
+  Type: Courier New monospace throughout — typewriter/reportage aesthetic
+*/
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+:root {
+  --bg:       #0a0a0a;
+  --fg:       #e8e3d8;
+  --muted:    #7a7670;
+  --rule:     #242320;
+  --link:     #e8e3d8;
+  --link-ul:  #4a4744;
+  --nav-bg:   #0a0a0a;
+  --photo-bg: #1a1917;
+  color-scheme: dark;
+  background: #0a0a0a;
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+html { background: #0a0a0a; }
 
-  /* ── NAV ─────────────────────────────────────────── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    height: 56px;
-    background: rgba(245,245,245,0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
+*, *::before, *::after { box-sizing: border-box; }
 
-  .nav-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text);
-    text-decoration: none;
-  }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  padding-left:  max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
 
-  .nav-tabs { display: flex; gap: 4px; }
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--rule);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
 
-  .nav-tab {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 8px 16px;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: color 0.15s;
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--nav-bg);
+  z-index: 10;
+}
 
-  .nav-tab:hover { color: var(--text); }
+.nav-name {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+}
 
-  /* ── PAGES ───────────────────────────────────────── */
-  .page { display: none; padding-top: 56px; min-height: 100vh; }
-  .page:target { display: block; }
-  #home { display: block; } /* default visible page */
+.nav-tabs { display: flex; gap: 24px; }
 
-  /* hide home when another target is active */
-  #work:target ~ #home,
-  #contact:target ~ #home { display: none; }
+.nav-tab {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
 
-  /* ── HERO ────────────────────────────────────────── */
-  .hero {
-    padding: 72px 32px 48px;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 36px;
-    border-bottom: 1px solid var(--border);
-  }
+.nav-tab:hover { color: var(--fg); }
 
-  .hero-left { display: flex; flex-direction: column; gap: 12px; }
+.page {
+  display: none;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-block: 56px;
+  min-height: 80vh;
+}
 
-  .hero-photo {
-    width: 220px;
-    aspect-ratio: 9/16;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border: 1px dashed var(--border);
-  }
+#home-page { display: block; }
 
-  .hero-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: clamp(52px, 8vw, 96px);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--text);
-  }
+#work:target ~ .pages #work-page  { display: block; }
+#work:target ~ .pages #home-page  { display: none; }
+#home:target ~ .pages #home-page  { display: block; }
 
-  .hero-role {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 500;
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    line-height: 1.9;
-    text-align: right;
-  }
+.profile-photo {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16/9;
+  background: var(--photo-bg);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
 
-  /* ── IMAGE GRID ──────────────────────────────────── */
-  .grid-section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 48px 32px;
-  }
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-  .grid-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
+.bio {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  line-height: 1.75;
+  max-width: 58ch;
+}
 
-  .img-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3px;
-  }
+.bio p { margin: 0 0 1.4em; }
+.bio p:last-child { margin-bottom: 0; }
 
-  .card {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-    background: var(--surface);
-    text-decoration: none;
-    display: block;
-  }
+.bio a {
+  color: var(--link);
+  text-decoration-line: underline;
+  text-decoration-color: var(--link-ul);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s;
+}
 
-  .card:first-child {
-    grid-column: span 2;
-    aspect-ratio: 16/7;
-  }
+.bio a:hover { text-decoration-color: var(--fg); }
 
-  /* Solid colour tile as the "image" — no external requests needed */
-  .card-bg {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.5s ease;
-  }
+.work-header { margin-bottom: 48px; }
 
-  .card:hover .card-bg { transform: scale(1.03); }
+.work-header h1 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
 
-  .card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-  }
+.work-header p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
 
-  .card-label {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 40px 20px 18px;
-  }
+.article-list { display: flex; flex-direction: column; }
 
-  .card-cat {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 5px;
-  }
+.article-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0 24px;
+  align-items: start;
+  padding-block: 24px;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+}
 
-  .card-title {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 500;
-    font-size: 13px;
-    color: #fff;
-    line-height: 1.3;
-  }
+.article-item:last-child { border-bottom: 1px solid var(--rule); }
 
-  .card:first-child .card-title { font-size: 17px; }
+.article-thumb {
+  width: 140px;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--photo-bg);
+}
 
-  /* Tile colours — varied greys */
-  .tile-a { background: #9a9a9a; }
-  .tile-b { background: #7e7e7e; }
-  .tile-c { background: #b2b2b2; }
-  .tile-d { background: #686868; }
-  .tile-e { background: #a4a4a4; }
+.article-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-  /* ── WORK PAGE ───────────────────────────────────── */
-  .work-section {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 56px 32px;
-  }
+.thumb-1 { background: #1e1e1c; }
+.thumb-2 { background: #1c1e20; }
+.thumb-3 { background: #1e1d1c; }
+.thumb-4 { background: #1c1e1d; }
+.thumb-5 { background: #1d1c1e; }
 
-  .work-header {
-    margin-bottom: 40px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--border);
-  }
+.article-meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 
-  .work-header h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 36px;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
+.article-tag {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-  .work-header p { color: var(--muted); font-size: 14px; }
+.article-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  line-height: 1.4;
+  transition: color 0.15s;
+}
 
-  .article-entry {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px;
-    align-items: start;
-    padding: 26px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    transition: padding-left 0.15s;
-  }
+.article-item:hover .article-title { color: var(--muted); }
 
-  .article-entry:hover { padding-left: 6px; }
-  .article-entry:hover .entry-arrow { color: var(--text); }
+.article-pub { font-size: 12px; color: var(--muted); }
 
-  .entry-cat {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-
-  .entry-title {
-    font-weight: 500;
-    font-size: 18px;
-    color: var(--text);
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
-
-  .entry-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-  .entry-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    padding-top: 2px;
-  }
-
-  .entry-date {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: #bbb;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .entry-arrow { color: #ccc; font-size: 18px; transition: color 0.15s; }
-
-  /* ── CONTACT ─────────────────────────────────────── */
-  .contact-section {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 80px 32px;
-  }
-
-  .contact-section h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 52px;
-    text-transform: uppercase;
-    color: var(--text);
-    line-height: 0.9;
+@media (max-width: 480px) {
+  .profile-photo {
+    aspect-ratio: 16/9;
     margin-bottom: 32px;
   }
 
-  .contact-bio {
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.75;
-    margin-bottom: 48px;
-    border-left: 2px solid var(--text);
-    padding-left: 20px;
+  .bio { font-size: 15px; }
+
+  .article-item {
+    grid-template-columns: 90px 1fr;
+    gap: 0 14px;
   }
 
-  .contact-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    transition: padding-left 0.2s;
-  }
-
-  .contact-link:hover { padding-left: 8px; }
-  .contact-link:hover .cl-label { color: var(--text); }
-  .contact-link:hover .cl-arr { color: var(--text); }
-
-  .cl-type {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 2px;
-  }
-
-  .cl-label { font-size: 16px; color: var(--text); transition: color 0.15s; }
-  .cl-arr { color: #ccc; font-size: 20px; transition: color 0.15s; }
-
-  /* ── FOOTER ──────────────────────────────────────── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 32px;
-    text-align: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #bbb;
-  }
-
-  @media (max-width: 700px) {
-    .img-grid { grid-template-columns: 1fr; }
-    .card:first-child { grid-column: span 1; aspect-ratio: 4/3; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-role { text-align: left; }
-    nav { padding: 0 16px; }
-    .article-entry { grid-template-columns: 1fr; gap: 6px; }
-    .entry-date { display: none; }
-  }
+  .article-thumb { width: 90px; }
+}
 </style>
-</head>
-<body>
+
+<span id="home" style="display:none"></span>
+<span id="work" style="display:none"></span>
 
 <nav>
   <a class="nav-name" href="#home">Angus Thomson</a>
   <div class="nav-tabs">
     <a class="nav-tab" href="#work">Work</a>
-    <a class="nav-tab" href="#contact">Contact</a>
   </div>
 </nav>
 
-<!-- ── HOME ──────────────────────────────────────────── -->
-<div class="page" id="home">
-  <div class="hero">
-<img class="hero-photo" src="angus-dinkus.jpg" alt="Angus Thomson" style="object-fit:cover;" />    <div class="hero-left">
-      <div class="hero-title">Angus<br>Thomson</div>
-      <div class="hero-role">Award winning journalist<br>based in London</div>
+<div class="pages">
+  <div id="home-page" class="page">
+    <div class="profile-photo">
+      <img src="angus-dinkus.jpg" alt="Angus Thomson" onerror="this.style.display='none'">
+    </div>
+
+    <div class="bio">
+      <p>Hi, I'm Angus 👋, an award-winning health journalist based in London.</p>
+      <p>I write about changes in healthcare technology and systems, and how they affect those seeking care. My investigations have sparked inquiries and led to policy change.</p>
+      <p>Are you an editor, or someone with a healthcare story to tell? You can send me an <a href="mailto:hello@angusrthomson.com">email</a> or reach me securely on Signal: @arthomson.01</p>
     </div>
   </div>
-  <div class="grid-section">
-    <div class="grid-label">Selected work</div>
-    <div class="img-grid">
 
-      <!-- Card 1 — full width -->
-      <a class="card" href="#work" style="grid-column:span 2; aspect-ratio:16/7;">
-<img class="card-bg" src="card-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" />        <div class="card-overlay"></div>
-        <div class="card-label">
-          <div class="card-cat">Cybersecurity</div>
-          <div class="card-title" style="font-size:17px;">Sensitive NSW medical records at risk of falling into hackers' hands</div>
-        </div>
-      </a>
-
-      <!-- Card 2 -->
-      <a class="card" href="#work">
-<img class="card-bg" src="card-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" />        <div class="card-overlay"></div>
-        <div class="card-label">
-          <div class="card-cat">Investigative</div>
-          <div class="card-title">In the shadow of a mining giant, children crawl in poison</div>
-        </div>
-      </a>
-
-      <!-- Card 3 -->
-      <a class="card" href="#work">
-<img class="card-bg" src="card-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" />        <div class="card-overlay"></div>
-        <div class="card-label">
-          <div class="card-cat">Podcast</div>
-          <div class="card-title">The people unknowingly poisoning themselves with common vitamins</div>
-        </div>
-      </a>
-
-      <!-- Card 4 -->
-      <a class="card" href="#work">
-<img class="card-bg" src="card-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" />        <div class="card-overlay"></div>
-        <div class="card-label">
-          <div class="card-cat">Interview</div>
-          <div class="card-title">Anthony Fauci on Australia's COVID response, AI and the next pandemic</div>
-        </div>
-      </a>
-
-      <!-- Card 5 -->
-      <a class="card" href="#work">
-<img class="card-bg" src="card-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" />        <div class="card-overlay"></div>
-        <div class="card-label">
-          <div class="card-cat">Interactive</div>
-          <div class="card-title">The science of pokies and how they keep you hooked</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</div>
-
-<!-- ── WORK ───────────────────────────────────────────── -->
-<div class="page" id="work">
-  <div class="work-section">
+  <div id="work-page" class="page">
     <div class="work-header">
-      <h2>Work</h2>
-      <p>I am an award-winning journalist relocating to London after four years at the <em>Sydney Morning Herald</em>. I have covered major health and science stories,live blogged conflict and elections, and broken investigations that have sparked government reviews and regulatory changes.</p>
+      <h1>Selected work</h1>
+      <p>Health journalism, investigations &amp; features</p>
     </div>
 
-    <a class="article-entry" href="https://www.smh.com.au/national/nsw/sensitive-nsw-medical-records-at-risk-of-falling-into-hackers-hands-damning-leak-reveals-20250619-p5m8u4.html" target="_blank" rel="noopener">
-      <div>
-        <div class="entry-cat">Cybersecurity</div>
-        <div class="entry-title">Sensitive NSW medical records at risk of falling into hackers' hands</div>
-        <div class="entry-desc">I was leaked a copy of an internal cybersecurity audit which found NSW hospitals were failing to meet basic cybersecurity standards despite measures costing taxpayers $40 million a year.</div>
-      </div>
-      <div class="entry-right">
-        <div class="entry-date">Jun 2025</div>
-        <span class="entry-arrow">→</span>
-      </div>
-    </a>
+    <div class="article-list">
 
-    <a class="article-entry" href="https://www.smh.com.au/national/nsw/in-the-shadow-of-a-mining-giant-children-crawl-in-poison-20240904-p5k7up.html" target="_blank" rel="noopener">
-      <div>
-        <div class="entry-cat">Investigative</div>
-        <div class="entry-title">In the shadow of a mining giant, children crawl in poison</div>
-        <div class="entry-desc">I travelled with photographer Rhett Wyman to the NSW Far West to investigate the disproportionate effect of lead poisoning on Indigenous children. This investigation was part of a body of work for which I was named 2025 Kennedy Young Journalist of the Year.</div>
-      </div>
-      <div class="entry-right">
-        <div class="entry-date">Sep 2024</div>
-        <span class="entry-arrow">→</span>
-      </div>
-    </a>
+      <a class="article-item" href="https://www.smh.com.au/technology/sensitive-nsw-medical-records-at-risk-of-falling-into-hackers-hands-20250604-p5lu7d.html" target="_blank" rel="noopener">
+        <div class="article-thumb thumb-1">
+          <img src="card-1.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="article-meta">
+          <span class="article-tag">Cybersecurity</span>
+          <span class="article-title">Sensitive NSW medical records at risk of falling into hackers' hands</span>
+          <span class="article-pub">Sydney Morning Herald · Jun 2025</span>
+        </div>
+      </a>
 
-    <a class="article-entry" href="https://www.smh.com.au/healthcare/the-people-unknowingly-poisoning-themselves-with-common-vitamins-20240202-p5f1ut.html" target="_blank" rel="noopener">
-      <div>
-        <div class="entry-cat">Podcast</div>
-        <div class="entry-title">The people unknowingly poisoning themselves with common vitamins</div>
-        <div class="entry-desc">I turned a reader tip-off and a previously unreported journal paper into a multiplatform investigation on vitamin B6 toxicity. My reporting over 18 months helped spark regulatory changes which saw common vitamins removed from the shelves. .</div>
-      </div>
-      <div class="entry-right">
-        <div class="entry-date">Feb 2024</div>
-        <span class="entry-arrow">→</span>
-      </div>
-    </a>
+      <a class="article-item" href="https://www.smh.com.au/national/in-the-shadow-of-a-mining-giant-children-crawl-in-poison-20240913-p5kayo.html" target="_blank" rel="noopener">
+        <div class="article-thumb thumb-2">
+          <img src="card-2.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="article-meta">
+          <span class="article-tag">Investigation</span>
+          <span class="article-title">In the shadow of a mining giant, children crawl in poison</span>
+          <span class="article-pub">Sydney Morning Herald · Sep 2024</span>
+        </div>
+      </a>
 
-    <a class="article-entry" href="https://www.smh.com.au/national/anthony-fauci-on-australia-s-covid-response-ai-and-the-next-pandemic-20230727-p5drm8.html" target="_blank" rel="noopener">
-      <div>
-        <div class="entry-cat">Interview</div>
-        <div class="entry-title">Anthony Fauci on Australia's COVID response, AI and the next pandemic</div>
-        <div class="entry-desc">I was the first Australian journalist to interview Fauci following his retirement after 38 years as the director of America's National Institute of Allergy and Infectious Diseases.</div>
-      </div>
-      <div class="entry-right">
-        <div class="entry-date">Jul 2023</div>
-        <span class="entry-arrow">→</span>
-      </div>
-    </a>
+      <a class="article-item" href="https://www.smh.com.au/national/the-people-unknowingly-poisoning-themselves-with-common-vitamins-20240209-p5f3jm.html" target="_blank" rel="noopener">
+        <div class="article-thumb thumb-3">
+          <img src="card-3.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="article-meta">
+          <span class="article-tag">Podcast</span>
+          <span class="article-title">The people unknowingly poisoning themselves with common vitamins</span>
+          <span class="article-pub">Sydney Morning Herald · Feb 2024</span>
+        </div>
+      </a>
 
-    <a class="article-entry" href="https://www.smh.com.au/interactive/2023/why-pokies-are-addictive/" target="_blank" rel="noopener">
-      <div>
-        <div class="entry-cat">Interactive</div>
-        <div class="entry-title">The science of pokies and how they keep you hooked</div>
-        <div class="entry-desc">I worked with the visual stories team to explain the science behind poker machines. The feature was part of a series recognised as a finalist in the 2023 Walkley Awards.</div>
-      </div>
-      <div class="entry-right">
-        <div class="entry-date">2023</div>
-        <span class="entry-arrow">→</span>
-      </div>
-    </a>
+      <a class="article-item" href="https://www.smh.com.au/world/north-america/anthony-fauci-on-australia-s-covid-response-ai-and-the-next-pandemic-20230704-p5dl8j.html" target="_blank" rel="noopener">
+        <div class="article-thumb thumb-4">
+          <img src="card-4.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="article-meta">
+          <span class="article-tag">Interview</span>
+          <span class="article-title">Anthony Fauci on Australia's COVID response, AI and the next pandemic</span>
+          <span class="article-pub">Sydney Morning Herald · Jul 2023</span>
+        </div>
+      </a>
 
+      <a class="article-item" href="https://www.smh.com.au/interactive/2023/pokies-science/" target="_blank" rel="noopener">
+        <div class="article-thumb thumb-5">
+          <img src="card-5.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="article-meta">
+          <span class="article-tag">Interactive</span>
+          <span class="article-title">The science of pokies and how they keep you hooked</span>
+          <span class="article-pub">Sydney Morning Herald · 2023</span>
+        </div>
+      </a>
+
+    </div>
   </div>
-  <footer>© Angus Thomson</footer>
 </div>
-
-<!-- ── CONTACT ─────────────────────────────────────────── -->
-<div class="page" id="contact">
-  <div class="contact-section">
-    <h2>Get in<br>Touch</h2>
-    <a class="contact-link" href="mailto:hello@angusrthomson.com">
-      <div><div class="cl-type">Email</div><div class="cl-label">hello@angusrthomson.com</div></div>
-      <span class="cl-arr">→</span>
-    </a>
-    <a class="contact-link" href="https://www.linkedin.com/in/angus-thomson-389448197/" target="_blank" rel="noopener">
-      <div class="cl-label">LinkedIn</div>
-      <span class="cl-arr">→</span>
-    </a>
