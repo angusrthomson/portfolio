@@ -3,12 +3,6 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 
 <style>
-/*
-  Layout: single-column, max 600px, centered; photo full-width above bio
-  Color: black background, off-white text — committed single dark theme
-  Type: Courier New monospace throughout — typewriter/reportage aesthetic
-*/
-
 :root {
   --bg:       #0a0a0a;
   --fg:       #e8e3d8;
@@ -46,7 +40,6 @@ nav {
   z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-block: 18px;
   max-width: 600px;
   margin: 0 auto;
@@ -71,33 +64,12 @@ body::before {
   text-decoration: none;
 }
 
-.nav-tabs { display: flex; gap: 24px; }
-
-.nav-tab {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: color 0.15s;
-}
-
-.nav-tab:hover { color: var(--fg); }
-
 .page {
-  display: none;
   max-width: 600px;
   margin: 0 auto;
   padding-block: 56px;
   min-height: 80vh;
 }
-
-#home-page { display: block; }
-
-#work:target ~ .pages #work-page  { display: block; }
-#work:target ~ .pages #home-page  { display: none; }
-#home:target ~ .pages #home-page  { display: block; }
 
 .profile-photo {
   width: 100%;
@@ -135,82 +107,6 @@ body::before {
 
 .bio a:hover { text-decoration-color: var(--fg); }
 
-.work-header { margin-bottom: 48px; }
-
-.work-header h1 {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 22px;
-  font-weight: normal;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin: 0 0 8px;
-}
-
-.work-header p {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0;
-}
-
-.article-list { display: flex; flex-direction: column; }
-
-.article-item {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 0 24px;
-  align-items: start;
-  padding-block: 24px;
-  border-top: 1px solid var(--rule);
-  text-decoration: none;
-  color: inherit;
-}
-
-.article-item:last-child { border-bottom: 1px solid var(--rule); }
-
-.article-thumb {
-  width: 140px;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  background: var(--photo-bg);
-}
-
-.article-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.thumb-1 { background: #1e1e1c; }
-.thumb-2 { background: #1c1e20; }
-.thumb-3 { background: #1e1d1c; }
-.thumb-4 { background: #1c1e1d; }
-.thumb-5 { background: #1d1c1e; }
-.thumb-6 { background: #1e1c1e; }
-
-.article-meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-
-.article-tag {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  color: var(--fg);
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.article-title {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--muted);
-  transition: color 0.15s;
-}
-
-.article-item:hover .article-title { color: var(--muted); }
-
-.article-pub { font-size: 12px; color: var(--muted); }
-
 @media (max-width: 480px) {
   .profile-photo {
     aspect-ratio: 16/9;
@@ -218,114 +114,22 @@ body::before {
   }
 
   .bio { font-size: 15px; }
-
-  .article-item {
-    grid-template-columns: 90px 1fr;
-    gap: 0 14px;
-  }
-
-  .article-thumb { width: 90px; }
 }
 </style>
 
-<span id="home" style="display:none"></span>
-<span id="work" style="display:none"></span>
-
 <nav>
-  <a class="nav-name" href="#home">Angus Thomson</a>
-  <div class="nav-tabs">
-    <a class="nav-tab" href="#work">Work</a>
-  </div>
+  <a class="nav-name" href="/">Angus Thomson</a>
 </nav>
 
-<div class="pages">
-  <div id="home-page" class="page">
-    <div class="profile-photo">
-      <img src="angus-dinkus.jpg" alt="Angus Thomson" onerror="this.style.display='none'">
-    </div>
-
-    <div class="bio">
-      <p>Hi, I'm Angus &#x1F44B;, an award-winning health journalist based in London.</p>
-      <p>I write about changes in healthcare technology and systems, and how they affect those seeking care. My investigations have sparked inquiries and led to policy change.</p>
-      <p>Want to chat? Send me an <a href="mailto:hello@angusrthomson.com">email</a> or reach me securely on Signal: @arthomson.01</p>
-    </div>
+<div class="page">
+  <div class="profile-photo">
+    <img src="angus-dinkus.jpg" alt="Angus Thomson" onerror="this.style.display='none'">
   </div>
 
-  <div id="work-page" class="page">
-    <div class="work-header">
-      <h1>Selected work</h1>
-    </div>
-
-    <div class="article-list">
-
-      <a class="article-item" href="https://www.youtube.com/watch?v=y3apItNJtfE" target="_blank" rel="noopener">
-  <div class="article-thumb thumb-6">
-    <img src="card-6.jpg" alt="" onerror="this.style.display='none'">
-  </div>
-  <div class="article-meta">
-    <span class="article-tag">Video: Papua New Guinea fights polio</span>
-    <span class="article-title">I travelled to Papua New Guinea for a front page story and multiplatform video documenting efforts to stamp out a polio outbreak in Australia's closest neighbour.</span>
-    <span class="article-pub">Sydney Morning Herald, May 2026 </span>
-  </div>
-</a> 
-
-      <a class="article-item" href="https://www.smh.com.au/national/nsw/sensitive-nsw-medical-records-at-risk-of-falling-into-hackers-hands-damning-leak-reveals-20250619-p5m8u4.html" target="_blank" rel="noopener">
-        <div class="article-thumb thumb-1">
-          <img src="card-1.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="article-meta">
-          <span class="article-tag">Scoop: NSW medical records at risk of falling into hackers' hands</span>
-          <span class="article-title">I revealed an internal audit which found NSW public hospitals were failing to meet basic cybersecurity standards, putting sensitive medical records and essential healthcare systems at risk.</span>
-          <span class="article-pub">Sydney Morning Herald, 2025</span>
-        </div>
-      </a>
-
-      <a class="article-item" href="https://www.smh.com.au/national/nsw/in-the-shadow-of-a-mining-giant-children-crawl-in-poison-20240904-p5k7up.html" target="_blank" rel="noopener">
-        <div class="article-thumb thumb-2">
-          <img src="card-2.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="article-meta">
-          <span class="article-tag">Investigation: In the shadow of a mining giant, children crawl in poison</span>
-          <span class="article-title">In this award-winning investigation, I revealed how Indigenous children were disproportionately affected by lead poisoning in a town built on one of Australia’s richest mineral deposits.
-
-</span>
-          <span class="article-pub">Sydney Morning Herald, 2024</span>
-        </div>
-      </a>
-
-      <a class="article-item" href="https://omny.fm/shows/please-explain-1/the-australians-poisoned-by-over-the-counter-vitamins" target="_blank" rel="noopener">
-        <div class="article-thumb thumb-3">
-          <img src="card-3.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="article-meta">
-          <span class="article-tag">Podcast: The people unknowingly poisoning themselves with common vitamins</span>
-          <span class="article-title">This podcast episode followed my reporting on people affected by vitamin B6 toxicity, which eventually led to some over-the-counter products being removed from shelves.</span>
-          <span class="article-pub">Sydney Morning Herald, 2025</span>
-        </div>
-      </a>
-
-      <a class="article-item" href="https://www.smh.com.au/national/anthony-fauci-on-australia-s-covid-response-ai-and-the-next-pandemic-20230727-p5drm8.html" target="_blank" rel="noopener">
-        <div class="article-thumb thumb-4">
-          <img src="card-4.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="article-meta">
-          <span class="article-tag">Interview: Dr Anthony Fauci on Australia's COVID response, AI and the next pandemic</span>
-          <span class="article-title">I was the first Australian journalist to interview Dr Fauci following his retirement.</span>
-          <span class="article-pub">Sydney Morning Herald, 2023</span>
-        </div>
-      </a>
-
-      <a class="article-item" href="https://www.smh.com.au/interactive/2023/why-pokies-are-addictive/" target="_blank" rel="noopener">
-        <div class="article-thumb thumb-5">
-          <img src="card-5.jpg" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="article-meta">
-          <span class="article-tag">Interactive: The science of pokies</span>
-          <span class="article-title">This visual story, explaining the science behind the design of slot machine games (known as "pokies" in Australia), was nominated for a Walkley Award.</span>
-          <span class="article-pub">Sydney Morning Herald, 2023</span>
-        </div>
-      </a>
-
-    </div>
+  <div class="bio">
+    <p>Hi, I'm Angus &#x1F44B;, an award-winning health journalist based in London.</p>
+    <p>I write about changes in healthcare technology and systems, and how they affect those seeking care. My investigations have sparked inquiries and led to policy change.</p>
+    <p>I'm building a new website to host my work. In the meantime, you can view my clippings <a href="https://www.clippings.me/angusthomson">here</a> and connect with me on <a href="https://www.linkedin.com/in/angus-thomson-389448197/">LinkedIn</a>. 
+    <p>You can also send me an <a href="mailto:thomson.angus@proton.me">email</a> or reach me securely on Signal: @arthomson.01</p>
   </div>
 </div>
