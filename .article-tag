@@ -185,20 +185,24 @@ body::before {
 .thumb-3 { background: #1e1d1c; }
 .thumb-4 { background: #1c1e1d; }
 .thumb-5 { background: #1d1c1e; }
+.thumb-6 { background: #1e1c1e; }
 
 .article-meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 
 .article-tag {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--fg);
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .article-title {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 15px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
   transition: color 0.15s;
 }
 
@@ -253,13 +257,24 @@ body::before {
 
     <div class="article-list">
 
+      <a class="article-item" href="https://www.youtube.com/watch?v=y3apItNJtfE" target="_blank" rel="noopener">
+  <div class="article-thumb thumb-6">
+    <img src="card-6.jpg" alt="" onerror="this.style.display='none'">
+  </div>
+  <div class="article-meta">
+    <span class="article-tag">Video: Papua New Guinea fights polio</span>
+    <span class="article-title">I travelled to Papua New Guinea for a front page story and multiplatform video documenting efforts to stamp out a polio outbreak in Australia's closest neighbour.</span>
+    <span class="article-pub">Sydney Morning Herald, May 2026 </span>
+  </div>
+</a> 
+
       <a class="article-item" href="https://www.smh.com.au/national/nsw/sensitive-nsw-medical-records-at-risk-of-falling-into-hackers-hands-damning-leak-reveals-20250619-p5m8u4.html" target="_blank" rel="noopener">
         <div class="article-thumb thumb-1">
           <img src="card-1.jpg" alt="" onerror="this.style.display='none'">
         </div>
         <div class="article-meta">
-          <span class="article-tag">Cybersecurity</span>
-          <span class="article-title">Sensitive NSW medical records at risk of falling into hackers' hands</span>
+          <span class="article-tag">Scoop: NSW medical records at risk of falling into hackers' hands</span>
+          <span class="article-title">I revealed an internal audit which found NSW public hospitals were failing to meet basic cybersecurity standards, putting sensitive medical records and essential healthcare systems at risk.</span>
           <span class="article-pub">Sydney Morning Herald, 2025</span>
         </div>
       </a>
@@ -269,20 +284,22 @@ body::before {
           <img src="card-2.jpg" alt="" onerror="this.style.display='none'">
         </div>
         <div class="article-meta">
-          <span class="article-tag">Investigation</span>
-          <span class="article-title">In the shadow of a mining giant, children crawl in poison</span>
+          <span class="article-tag">Investigation: In the shadow of a mining giant, children crawl in poison</span>
+          <span class="article-title">In this award-winning investigation, I revealed how Indigenous children were disproportionately affected by lead poisoning in a town built on one of Australia’s richest mineral deposits.
+
+</span>
           <span class="article-pub">Sydney Morning Herald, 2024</span>
         </div>
       </a>
 
-      <a class="article-item" href="https://www.smh.com.au/healthcare/the-people-unknowingly-poisoning-themselves-with-common-vitamins-20240202-p5f1ut.html" target="_blank" rel="noopener">
+      <a class="article-item" href="https://omny.fm/shows/please-explain-1/the-australians-poisoned-by-over-the-counter-vitamins" target="_blank" rel="noopener">
         <div class="article-thumb thumb-3">
           <img src="card-3.jpg" alt="" onerror="this.style.display='none'">
         </div>
         <div class="article-meta">
-          <span class="article-tag">Podcast</span>
-          <span class="article-title">The people unknowingly poisoning themselves with common vitamins</span>
-          <span class="article-pub">Sydney Morning Herald, 2024</span>
+          <span class="article-tag">Podcast:The people unknowingly poisoning themselves with common vitamins</span>
+          <span class="article-title">This podcast episode followed my reporting on people affected by vitamin B6 toxicity, which eventually led to some over-the-counter products being removed from shelves.</span>
+          <span class="article-pub">Sydney Morning Herald, 2025</span>
         </div>
       </a>
 
@@ -291,8 +308,8 @@ body::before {
           <img src="card-4.jpg" alt="" onerror="this.style.display='none'">
         </div>
         <div class="article-meta">
-          <span class="article-tag">Interview</span>
-          <span class="article-title">Anthony Fauci on Australia's COVID response, AI and the next pandemic</span>
+          <span class="article-tag">Interview: Dr Anthony Fauci on Australia's COVID response, AI and the next pandemic</span>
+          <span class="article-title">I was the first Australian journalist to interview Dr Fauci following his retirement.</span>
           <span class="article-pub">Sydney Morning Herald, 2023</span>
         </div>
       </a>
@@ -302,8 +319,8 @@ body::before {
           <img src="card-5.jpg" alt="" onerror="this.style.display='none'">
         </div>
         <div class="article-meta">
-          <span class="article-tag">Interactive</span>
-          <span class="article-title">The science of pokies and how they keep you hooked</span>
+          <span class="article-tag">Interactive:</span>
+          <span class="article-title">This visual story, explaining the science behind the design of slot machine games (known as "pokies" in Australia), was nominated for a Walkley Award.</span>
           <span class="article-pub">Sydney Morning Herald, 2023</span>
         </div>
       </a>
